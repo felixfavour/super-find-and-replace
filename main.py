@@ -26,7 +26,7 @@ def parse_img_tag(img_tag: str) -> Dict[str, str]:
     
     # Extract all attributes except src, @click and v-svg-inline
     # Also remove :class attributes as it is registered as a directive
-    temp_img_tag = img_tag.replace(':class=', 'dynamic-class=')
+    temp_img_tag = img_tag.replace(':class=', 'dynamic-class=').replace(':stye=', 'dynamic-style=')
     # print('temp_img_tag', temp_img_tag)
     attributes = {}
     attr_pattern = r'(\w+(?:-\w+)*)="([^"]*)"'
@@ -34,7 +34,7 @@ def parse_img_tag(img_tag: str) -> Dict[str, str]:
     for match in re.finditer(attr_pattern, temp_img_tag):
         attr_name, attr_value = match.groups()
         # print('attr_name', attr_name)
-        if attr_name not in ['src', 'v-svg-inline', 'click', 'dynamic-class', 'v-if', 'v-else-if', 'v-else']:
+        if attr_name not in ['src', 'v-svg-inline', 'click', 'dynamic-class', 'dynamic-style', 'v-if', 'v-else-if', 'v-else', 'v-for']:
             attributes[attr_name] = attr_value
     
     # Extract vue directives (attributes starting with v- or @)
